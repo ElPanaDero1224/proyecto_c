@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Calculadora de Transformada de Laplace</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Asegúrate de tener los archivos de Nerdamer en tu proyecto -->
+    <script src="nerdamer.core.js"></script>
+    <script src="Algebra.js"></script>
+    <script src="Calculus.js"></script>
+    <script src="Extra.js"></script>
+    <script src="Solve.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <h1>Calculadora de Transformada de Laplace</h1>
+    <p>Ingrese la función en términos de \( t \):</p>
+    <input type="text" id="funcion" placeholder="Función...">
+    <br><br>
+
+    <!-- Corregido el error en los botones -->
+    <button onclick="agregarTexto('sin(t)')">sin</button>
+    <button onclick="agregarTexto('cos(t)')">cos</button>
+    <button onclick="agregarTexto('tan(t)')">tan</button>
+    <button onclick="agregarTexto('e^')">euler</button>
+    <button onclick="agregarTexto('x')">x</button>
+    <button onclick="agregarTexto('x^2')">x^2</button>
+    <button onclick="agregarTexto('x^n')">x^n</button>
+    <button onclick="agregarTexto('+')">+</button>
+    <button onclick="agregarTexto('-')">-</button>
+    <button onclick="agregarTexto('*')">*</button>
+    <button onclick="agregarTexto('/')">/</button>
+    
+    <br><br>
+    <button onclick="calcularTransformada()">Calcular Transformada</button>
+    <br><br>
+    <!-- ID único para el resultado de la transformada -->
+    <p>Resultado de la Transformada:</p>
+    <div id="resultadoTransformada"></div>
+
+    <script>
+        function agregarTexto(texto) {
+            var input = document.getElementById('funcion');
+            input.value += texto;
+        }
+
+        function calcularTransformada() {
+            var funcion = document.getElementById('funcion').value;
+            try {
+                var resultado = nerdamer.laplace(funcion, 't', 's').toString();
+                document.getElementById('resultadoTransformada').innerHTML = resultado;
+                MathJax.typeset([document.getElementById('resultadoTransformada')]); // Renderiza la expresión matemática
+            } catch (error) {
+                document.getElementById('resultadoTransformada').innerHTML = "Error al calcular la transformada. Por favor, verifique la función ingresada.";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <title>MathJax Example</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('mathForm').addEventListener('submit', function(event) {
+                event.preventDefault(); // Evita que el formulario se envíe
+                var mathInput = document.getElementById('mathInput').value;
+                var output = document.getElementById('mathOutput');
+                output.textContent = ''; // Borra cualquier contenido previo
+                output.appendChild(document.createTextNode('La expresión ingresada es: '));
+                var mathNode = document.createElement('span');
+                mathNode.textContent = mathInput;
+                output.appendChild(mathNode);
+                MathJax.typesetPromise([output]).catch(function(err) {
+                    output.textContent = 'Error al procesar la expresión matemática: ' + err.message;
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Entrada y salida de datos con MathJax</h1>
+    <form id="mathForm">
+        <label for="mathInput">Ingrese una expresión matemática:</label><br>
+        <input type="text" id="mathInput" name="mathInput"><br>
+        <input type="submit" value="Calcular">
+    </form>
+    <div id="mathOutput"></div>
+</body>
+</html>
